@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('styles')
+
+@endsection()
+
 @section('content')
     <div class="container" style="margin: 150px auto; ">
         <div class="row justify-content-center">
@@ -69,6 +73,8 @@
 
                                     <img class="img-thumbnail captcha" src="{{ captcha_src('flat') }}" onclick="this.src='/captcha/flat?'+Math.random()" title="点击图片重新获取验证码">
 
+                                    <div id="cbox"></div>
+
                                     @if ($errors->has('captcha'))
                                         <span class="help-block">
                                 <strong>{{ $errors->first('captcha') }}</strong>
@@ -90,5 +96,54 @@
             </div>
         </div>
     </div>
+@endsection()
 
-@endsection
+    @section('scripts')
+
+        <script src="https://www.yunpian.com/static/official/js/libs/riddler-sdk-0.2.1.js"></script>
+
+        <!--初始化-->
+        <script>
+
+            window.onload = function () {
+
+                // 初始化
+                new YpRiddler({
+                    expired: 10,
+                    mode: 'dialog',
+                    container: document.getElementById('cbox'),
+                    appId: 'your-captchaId',
+                    version: 'v1',
+                    onError: function (param) {
+                        if(param.code == 429) {
+                            alert('请求过于频繁，请稍后再试！')
+                            return
+                        }
+                        // 异常回调
+                        console.error('验证服务异常')
+                    },
+                    onSuccess: function (validInfo, close) {
+                        // 成功回调
+                        alert(`验证通过！token=${validInfo.token}, authenticate=${validInfo.authenticate}`)
+                        close()
+                    },
+                    onFail: function (code, msg, retry) {
+                        // 失败回调
+                        alert('出错啦：' + msg + ' code: ' + code)
+                        retry()
+                    },
+                    beforeStart: function (next) {
+                        console.log('验证马上开始')
+                        next()
+                    },
+                    onExit: function() {
+                        // 退出验证 （仅限dialog模式有效）
+                        console.log('退出验证')
+                    }
+                })
+            }
+        </script>
+    @endsection()
+
+
+
