@@ -14,7 +14,7 @@ class AddAvatarToUsersTables extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('avatar')->nullable();
+            $table->string('avatar')->defualt('https://tse3-mm.cn.bing.net/th?id=OIP.jy4Ho-AVDIf__a3RJAEsVwHaIc&pid=Api&w=779&h=888&rs=1&p=0');
         });
     }
 

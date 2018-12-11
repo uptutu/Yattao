@@ -35,8 +35,8 @@ class YunpianCaptchaHandler
 
     public function __construct()
     {
-        $this->secretId = \Config('YUNPIAN_SECRET_ID');
-        $this->secretKey = \Config('YUNPIAN_SECRET_KEY');
+        $this->secretId = \Config('yunpian.secretId');
+        $this->secretKey = \Config('yunpian.secretKey');
         $this->client = new ApiRequest();
     }
 
@@ -46,9 +46,9 @@ class YunpianCaptchaHandler
                     $this->captchaUrl,
                     $this->getParams(),
                     'form_params');
-        if (isset($res['err_msg'])) return "请求失败";
+        if (isset($res['err_msg'])) return "请求失败: " . $res['err_msg'];
 
-        return $res['content'];
+        return json_decode($res['content'],true);
     }
 
     public function setParams($data)
@@ -69,12 +69,11 @@ class YunpianCaptchaHandler
         return $this->paramsData;
     }
 
-    protected function setSignature()
+    public function setSignature()
     {
         $data = $this->getParams();
-        $str = '';
-        if (isset($data['key'])) unset($data['key']);
 
+        $str = '';
         ksort($data);
         foreach ($data as $k => $v) {
             if ($v) {

@@ -69,19 +69,13 @@
                                 <label for="captcha" class="col-md-4 control-label text-md-right">验证码</label>
 
                                 <div class="col-md-6">
-                                    <input id="captcha" class="form-control" name="captcha" >
-
-                                    <img class="img-thumbnail captcha" src="{{ captcha_src('flat') }}" onclick="this.src='/captcha/flat?'+Math.random()" title="点击图片重新获取验证码">
 
                                     <div id="cbox"></div>
-
-                                    @if ($errors->has('captcha'))
-                                        <span class="help-block">
-                                <strong>{{ $errors->first('captcha') }}</strong>
-                            </span>
-                                    @endif
                                 </div>
                             </div>
+
+                            <input type="hidden" name="token" value="" id="token" />
+                            <input type="hidden" name="authenticate" value="" id="authenticate" />
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
@@ -104,7 +98,6 @@
 
         <!--初始化-->
         <script>
-
             window.onload = function () {
 
                 // 初始化
@@ -112,7 +105,7 @@
                     expired: 10,
                     mode: 'dialog',
                     container: document.getElementById('cbox'),
-                    appId: 'your-captchaId',
+                    appId: '2d2e4108e82b467ca0555f33b4afeb5a',
                     version: 'v1',
                     onError: function (param) {
                         if(param.code == 429) {
@@ -124,7 +117,9 @@
                     },
                     onSuccess: function (validInfo, close) {
                         // 成功回调
-                        alert(`验证通过！token=${validInfo.token}, authenticate=${validInfo.authenticate}`)
+                        // alert(`验证通过！token=${validInfo.token}, authenticate=${validInfo.authenticate}`)
+                        document.getElementById("token").value = validInfo.token;
+                        document.getElementById("authenticate").value = validInfo.authenticate;
                         close()
                     },
                     onFail: function (code, msg, retry) {

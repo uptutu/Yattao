@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Handlers\YunpianCaptchaHandler;
+use App\Lib\ApiRequest;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -52,25 +55,34 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'captcha' => 'required|captcha',
-        ], [
-            'captcha.required' => '验证码不能为空',
-            'captcha.captcha' => '请输入正确的验证码',
+            'token' => 'required|string',
+            'authenticate' => 'required|string'
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return \App\Models\User
      */
     protected function create(array $data)
     {
+        $yp = new YunpianCaptchaHandler();
+        $result = $yp->setParams([
+            'captchaId' => \Config('yunpian.captchaId'),
+            'token' => $data['token'],
+            'authenticate' => $data['authenticate'],
+            'secretId' => \Config('yunpian.secretId'),
+            'version' => '1.0',
+            'timestamp' => time(),
+            'nonce' => random_int(1,99999)
+        ])->setSignature()->getResult();
+        if (0 === $result['code'])
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        else
+            return "验证失败";
     }
 }
