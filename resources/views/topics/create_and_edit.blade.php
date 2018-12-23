@@ -74,6 +74,49 @@
                     leaveConfirm: '文件上传中，关闭此页面将取消上传。'
                 },
                 pasteImage: true,
+                tool : [
+                    'title',
+                    'bold',
+                    'italic',
+                    'underline',
+                    'strikethrough',
+                    'fontScale',
+                    'color',
+                    'ol',
+                    'ul' ,
+                    'blockquote',
+                    'code',
+                    'table',
+                    'link',
+                    'image',
+                    'hr',
+                    'indent',
+                    'outdent',
+                    'alignment'
+                ],
+                allowTags : ['br', 'span', 'a', 'img', 'b', 'strong', 'i', 'strike', 'u', 'font', 'p', 'ul', 'ol', 'li', 'blockquote', 'pre', 'code', 'h1', 'h2', 'h3', 'h4', 'hr'],
+                codeLanguages : [
+                    { name: 'Bash', value: 'bash' },
+                    { name: 'C++', value: 'c++' },
+                    { name: 'C#', value: 'cs' },
+                    { name: 'CSS', value: 'css' },
+                    { name: 'Erlang', value: 'erlang' },
+                    { name: 'Less', value: 'less' },
+                    { name: 'Sass', value: 'sass' },
+                    { name: 'Diff', value: 'diff' },
+                    { name: 'CoffeeScript', value: 'coffeescript' },
+                    { name: 'HTML,XML', value: 'html' },
+                    { name: 'JSON', value: 'json' },
+                    { name: 'Java', value: 'java' },
+                    { name: 'JavaScript', value: 'js' },
+                    { name: 'Markdown', value: 'markdown' },
+                    { name: 'Objective C', value: 'oc' },
+                    { name: 'PHP', value: 'php' },
+                    { name: 'Perl', value: 'parl' },
+                    { name: 'Python', value: 'python' },
+                    { name: 'Ruby', value: 'ruby' },
+                    { name: 'SQL', value: 'sql'}
+                ]
             });
         });
     </script>
