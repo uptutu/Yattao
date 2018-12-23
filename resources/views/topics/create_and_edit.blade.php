@@ -74,7 +74,7 @@
                     leaveConfirm: '文件上传中，关闭此页面将取消上传。'
                 },
                 pasteImage: true,
-                tool : [
+                toolbar : [
                     'title',
                     'bold',
                     'italic',
@@ -82,18 +82,26 @@
                     'strikethrough',
                     'fontScale',
                     'color',
+                    '|',
                     'ol',
-                    'ul' ,
+                    'ul',
                     'blockquote',
                     'code',
                     'table',
                     'link',
                     'image',
                     'hr',
+                    '|',
                     'indent',
                     'outdent',
-                    'alignment'
+                    'alignment',
                 ],
+                allowedAttributes : {
+                    img: ['src', 'alt', 'width', 'height', 'data-non-image'],
+                    a: ['href', 'target'],
+                    font: ['color', 'size'],
+                    code: ['class'],
+                },
                 allowTags : ['br', 'span', 'a', 'img', 'b', 'strong', 'i', 'strike', 'u', 'font', 'p', 'ul', 'ol', 'li', 'blockquote', 'pre', 'code', 'h1', 'h2', 'h3', 'h4', 'hr'],
                 codeLanguages : [
                     { name: 'Bash', value: 'bash' },
