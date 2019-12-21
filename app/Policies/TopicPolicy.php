@@ -8,16 +8,16 @@ use App\Models\Topic;
 class TopicPolicy extends Policy
 {
 
-    protected $admin;
+    protected $adminId;
 
     public function __construct()
     {
-        $this->admin = User::all()->first()->id;
+        $this->adminId = User::all()->first()->id;
     }
 
     public function isAdmin(User $user)
     {
-        return $user->id === $this->admin;
+        return $user->id == $this->adminId;
     }
 
     public function update(User $user, Topic $topic)

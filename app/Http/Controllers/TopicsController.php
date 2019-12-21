@@ -34,7 +34,7 @@ class TopicsController extends Controller
 	public function create(Topic $topic)
 	{
         try {
-            $this->authorize('isAdmin', Auth::user());
+            $this->authorize('isAdmin', $topic);
         } catch (AuthorizationException $e) {
             return view('errors.403');
         }
@@ -52,7 +52,7 @@ class TopicsController extends Controller
 	public function edit(Topic $topic)
 	{
         try {
-            $this->authorize('isAdmin', Auth::user());
+            $this->authorize('isAdmin', $topic);
         } catch (AuthorizationException $e) {
             return view('errors.403');
         }
@@ -62,7 +62,7 @@ class TopicsController extends Controller
 	public function update(TopicRequest $request, Topic $topic)
 	{
         try {
-            $this->authorize('isAdmin', Auth::user());
+            $this->authorize('isAdmin', $topic);
         } catch (AuthorizationException $e) {
             return view('errors.403');
         }
@@ -74,7 +74,7 @@ class TopicsController extends Controller
 	public function destroy(Topic $topic)
 	{
         try {
-            $this->authorize('isAdmin', Auth::user());
+            $this->authorize('isAdmin', $topic);
         } catch (AuthorizationException $e) {
             return view('errors.403');
         }
