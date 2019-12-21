@@ -21,24 +21,31 @@
         </form>
     </div>
 
-    <hr>
+    <!-- <hr> -->
 
+
+</div>
     <div class="reply-list">
         @foreach ($msgs as $index => $msg)
-            <div class=" media"  name="msg{{ $msg->id }}" id="name{{ $msg->id }}">
 
+      
+            <div class="container"  name="msg{{ $msg->id }}" id="name{{ $msg->id }}" >
+
+            <div class="card card_middle">
+            <div class="card-header card_change">
                 <a href="{{ route('users.show', [$msg->user_id]) }}">
                     <img class="mr-3 img-thumbnail" alt="{{ $msg->user->name }}" src="{{ $msg->user->avatar }}"  style="width:48px;height:48px;"/>
                 </a>
-
-
-                <div class="media-body">
-                    <h5 class="mt-0">
-                        <a href="{{ route('users.show', [$msg->user_id]) }}" title="{{ $msg->user->name }}">
+                <h5 class="mt-0 card_text">
+                        <a href="{{ route('users.show', [$msg->user_id]) }}" title="{{ $msg->user->name }}" class="card_text">
                             {{ $msg->user->name }}
                         </a>
-                    </h5>
+                </h5>
 
+            </div>
+            <div class="card-body card-body-change">
+            <div class="media-body">
+                    
                     {{--内容--}}
                     {!! $msg->content !!}
 
@@ -54,12 +61,20 @@
                             </form>
                         </span>
                     @endcan
-                    <span class="meta pull-right ml-4" title="{{ $msg->created_at }}">{{ $msg->created_at->diffForHumans() }}</span>
+                    <span class="pull-right ml-4 card_time" title="{{ $msg->created_at }}">{{ $msg->created_at->diffForHumans() }}</span>
                 </div>
+            </div>
+    </div>
+                <!-- <a href="{{ route('users.show', [$msg->user_id]) }}">
+                    <img class="mr-3 img-thumbnail" alt="{{ $msg->user->name }}" src="{{ $msg->user->avatar }}"  style="width:48px;height:48px;"/>
+                </a> -->
+
+
+              
 
 
             </div>
-            <hr>
+            <!-- <hr> -->
         @endforeach
     </div>
 </div>

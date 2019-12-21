@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <!--Custom styles for this template -->
     <link href="{{ asset('css/self-defining.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
     {{--更多的样式表--}}
     @yield('styles')
 
