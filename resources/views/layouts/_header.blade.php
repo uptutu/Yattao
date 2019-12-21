@@ -8,13 +8,13 @@
         <div class="collapse navbar-collapse " id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item {{ active_class(if_route('home')) }}">
-                    <a class="nav-link" href="{{ route('home') }}">主页<span class="sr-only">(current)</span></a>
+                    <a class="nav-link hvr-grow" href="{{ route('home') }}">主页<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item {{ active_class(if_route('msgs.index')) }}">
-                    <a class="nav-link" href="{{ route('msgs.index') }}">留言板</a>
+                    <a class="nav-link hvr-grow" href="{{ route('msgs.index') }}">留言板</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ active_class(if_route('topics.show') or if_route('topics.index')) }}" href="{{ route('topics.index') }}">日志</a>
+                    <a class="hvr-grow nav-link {{ active_class(if_route('topics.show') or if_route('topics.index')) }}" href="{{ route('topics.index') }}">日志</a>
                 </li>
             </ul>
             {{--Right side Of Navbar--}}
@@ -33,7 +33,7 @@
                                 </span>
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <div class="dropdown-menu animated fadeIn" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item" href="{{ route('users.show', Auth::id()) }}">
                                     <i class="fa fa-user mr-2" aria-hidden="true"></i>个人中心
                                 </a>
