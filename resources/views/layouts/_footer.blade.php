@@ -9,6 +9,6 @@
         <li class="d-inline pr-3"><a href="https://weibo.com/2218067061/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1"><i class="fa fa-2x fa-weibo"></i></a></li>
     </ul>
     <div class="pb-lg-5">
-        &copy Yattao Kung-2018
+        &copy Yattao Kung-2019
     </div>
 </footer>

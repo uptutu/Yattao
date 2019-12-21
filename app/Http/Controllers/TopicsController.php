@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Topic;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TopicRequest;
@@ -32,8 +33,12 @@ class TopicsController extends Controller
 
 	public function create(Topic $topic)
 	{
-	    $this->authorize('isAdmin', Auth::user());
-		return view('topics.create_and_edit', compact('topic'));
+        try {
+            $this->authorize('isAdmin', Auth::user());
+        } catch (AuthorizationException $e) {
+            return view('errors.403');
+        }
+        return view('topics.create_and_edit', compact('topic'));
 	}
 
 	public function store(TopicRequest $request, Topic $topic)
@@ -46,22 +51,34 @@ class TopicsController extends Controller
 
 	public function edit(Topic $topic)
 	{
-        $this->authorize('isAdmin', Auth::user());
-		return view('topics.create_and_edit', compact('topic'));
+        try {
+            $this->authorize('isAdmin', Auth::user());
+        } catch (AuthorizationException $e) {
+            return view('errors.403');
+        }
+        return view('topics.create_and_edit', compact('topic'));
 	}
 
 	public function update(TopicRequest $request, Topic $topic)
 	{
-		$this->authorize('isAdmin', Auth::user());
-		$topic->update($request->all());
+        try {
+            $this->authorize('isAdmin', Auth::user());
+        } catch (AuthorizationException $e) {
+            return view('errors.403');
+        }
+        $topic->update($request->all());
 
 		return redirect()->route('topics.show', $topic->id)->with('message', '更新日志成功');
 	}
 
 	public function destroy(Topic $topic)
 	{
-		$this->authorize('isAdmin', $topic);
-		$topic->delete();
+        try {
+            $this->authorize('isAdmin', Auth::user());
+        } catch (AuthorizationException $e) {
+            return view('errors.403');
+        }
+        $topic->delete();
 
 		return redirect()->route('topics.index')->with('message', '删除成功');
 	}

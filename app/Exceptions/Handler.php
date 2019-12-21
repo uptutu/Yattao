@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -13,7 +14,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        'Symfony\Component\HttpKernel\Exception\HttpException'
     ];
 
     /**
@@ -31,23 +32,25 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
+     * @param \Exception $exception
+     *
      * @return void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
         parent::report($exception);
     }
 
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
-     */
+
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        if ($this->isHttpException($exception)) {
+            return $this->renderHttpException($exception);
+        } else if ($exception instanceof NotFoundHttpException) {
+            return response()->view('missing', [], 404);
+        } else {
+            return parent::render($request, $exception);
+        }
     }
 }
