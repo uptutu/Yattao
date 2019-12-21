@@ -32,7 +32,7 @@ class TopicsController extends Controller
 
 	public function create(Topic $topic)
 	{
-	    $this->authorize('isAdmin', $topic);
+	    $this->authorize('isAdmin', Auth::user());
 		return view('topics.create_and_edit', compact('topic'));
 	}
 
@@ -46,13 +46,13 @@ class TopicsController extends Controller
 
 	public function edit(Topic $topic)
 	{
-        $this->authorize('isAdmin', $topic);
+        $this->authorize('isAdmin', Auth::user());
 		return view('topics.create_and_edit', compact('topic'));
 	}
 
 	public function update(TopicRequest $request, Topic $topic)
 	{
-		$this->authorize('isAdmin', $topic);
+		$this->authorize('isAdmin', Auth::user());
 		$topic->update($request->all());
 
 		return redirect()->route('topics.show', $topic->id)->with('message', '更新日志成功');
