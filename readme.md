@@ -1,59 +1,89 @@
+## About this Project
+
+This project is my first personal Web in the Internet.
+
+You can browse Yattao[https://www.yattao.top] to visit this complete.
+
+
+
+## Power By
+
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+## Technology stack
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+HTML
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+CSS
 
-## Learning Laravel
+JS
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+PHP7.2+
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+MySQL5.8+
 
-## Laravel Sponsors
+Bootstrap 4
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+Laravel6
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
 
-## Contributing
+## Target of This Project
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Message Board
+- Blog
+- User Login
+- Push this Web application in Internet
 
-## Security Vulnerabilities
+## Core Code
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Message Board Core Code
 
-## License
+```PHP
+class MsgBoardController extends Controller
+{
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index',]);
+    }
+
+
+    public function index()
+    {
+        $msgs = Msg::orderBy('created_at', 'desc')->get();
+        return view('models.messageboard', compact('msgs'));
+    }
+
+    public function store(Request $request, Msg $msg)
+    {
+        $user_id = Auth::id();
+        $content = clean( $request->input('content'), 'default');
+        if (!empty($content)){
+            $msg->user_id = $user_id;
+            $msg->content = $content;
+            $msg->save();
+            return redirect()->to(route('msgs.index'))->with('success', '留言成功！');
+        } else {
+            return redirect()->to(route('msgs.index'))->with('danger', '留言失败！');
+        }
+    }
+
+    public function destroy(Msg $msg)
+    {
+        $this->authorize('delete', $msg);
+        $msg->delete();
+//        return dd($msg);
+        return redirect()->to(route('msgs.index'))->with('success', '成功删除留言');
+    }
+
+}
+```
+
+## Summaries
+
+Mastering the use of the Laravel framework allows you to quickly develop a WEB application based on Laravel and familiarize yourself with using bootstrap to build front-end pages.
+
+Third-party cloud chip behavior verification is used as additional validation.
+
