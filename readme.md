@@ -74,7 +74,6 @@ class MsgBoardController extends Controller
     {
         $this->authorize('delete', $msg);
         $msg->delete();
-//        return dd($msg);
         return redirect()->to(route('msgs.index'))->with('success', '成功删除留言');
     }
 
